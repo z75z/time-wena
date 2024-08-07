@@ -10,15 +10,15 @@ from pyrogram.errors import FloodWait, MessageIdInvalid, MessageNotModified
 
 load_dotenv()
 
-SESSION_NAME = getenv('SESSION_NAME')
-API_ID = getenv('API_ID')
-API_HASH = getenv('API_HASH')
-SESSION_STRING = getenv('SESSION_STRING')
+SESSION_NAME = getenv('SESSION_NAME', 'dev7amo')
+API_ID = getenv('API_ID', '12962251')
+API_HASH = getenv('API_HASH', 'b51499523800add51e4530c6f552dbc8')
+SESSION_STRING = getenv('SESSION_STRING', 'AgDFycsADeD4dNym437-7YSdxhS2SdzwH_7dmmy5elQg4KnaX-C_CYhKfv77voQQV25YpCFMyqLDSoPp0PlP5FxxFBA6-lkfeBX39zec0ja-LqhLbkPSxwggK_TLyx-o893MwPHRE0Y_Za9N2Yaz8FQvMMWgNI3DB8CYik8ArH19KuuulIW2xI_opmxpOEFlpwlGFT8GlWNiIkJIavyjpOgJlxWbN0lCo25CBNEGypRhYZ7c605_yr1R-kpqTPW56hPH_CloCqvxSIicbjOkOqpXKDdyh4EXpHfAarKbnNGcZiPiR0jcwT4swwAG2AjpCtZXFaKO5ZxjuxLGnM_xjJaJl9qbBwAAAAAxrBH9AA')
 
 LAST_MESSAGES_AMOUNT = int(getenv('LAST_MESSAGES_AMOUNT'))
 MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS = int(getenv('MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS'))
-COMMANDS = loads(getenv('COMMANDS'))
-PREFIXES = loads(getenv('PREFIXES'))
+COMMANDS = loads(getenv('COMMANDS', 'wena'))
+PREFIXES = loads(getenv('PREFIXES', '.'))
 
 
 if SESSION_STRING:
@@ -132,7 +132,7 @@ def ass_hack_command(_, msg):
     # except MessageNotModified:
     #     pass
 
-@app.on_message(filters.command("!test", prefixes="") & filters.me)
+@app.on_message(filters.command("test", prefixes="") & filters.me)
 def test(_, msg):
     print("TEST")
 
