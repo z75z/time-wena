@@ -17,8 +17,7 @@ SESSION_STRING = getenv('SESSION_STRING', 'AgDFycsADeD4dNym437-7YSdxhS2SdzwH_7dm
 
 LAST_MESSAGES_AMOUNT = int(getenv('LAST_MESSAGES_AMOUNT', '20'))
 MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS = int(getenv('MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS', '100'))
-COMMANDS = loads(getenv('COMMANDS', 'wena'))
-PREFIXES = loads(getenv('PREFIXES', '.'))
+
 
 
 if SESSION_STRING:
@@ -105,7 +104,7 @@ def ass_hack_background(_, msg):
         pass
 
 
-@app.on_message(filters.command(COMMANDS, prefixes=PREFIXES) & filters.me)
+@app.on_message(filters.command('wena') & filters.me)
 def ass_hack_command(_, msg):
     try:
         if msg.text:
