@@ -56,7 +56,7 @@ def save_secret(msg, command_msg=None):
                                         f"{sender_name_link} sent a photo, {msg.photo.width}x{msg.photo.height}, " \
                                         f"{attachment_size_KiB} KiB, {ttl} s, {sending_date}\n__Uploading...__")
         
-        caption = f"{sender_name_link}, {msg.photo.width}x{msg.photo.height}, {attachment_size_KiB} KiB, {ttl} s, {sending_date}"
+        caption = f"**نێردرا لەلایەن : {sender_name_link}, {msg.photo.width}x{msg.photo.height}, {attachment_size_KiB} KiB, {ttl} s, {sending_date}**"
         attachment = msg.download(in_memory=True)
 
         app.send_photo(work_chat_id, attachment, caption)
@@ -69,7 +69,7 @@ def save_secret(msg, command_msg=None):
                                         f"{sender_name_link} sent a video, {msg.video.width}x{msg.video.height}, " \
                                         f"{attachment_size_MiB} MiB, {video_duration}, {ttl} s, {sending_date} s\n__Uploading...__")
 
-        caption = f"{sender_name_link}, {video_duration}, {msg.video.width}x{msg.video.height}, " \
+        caption = f"**نێردرا لەلایەن : {sender_name_link}, {video_duration}, {msg.video.width}x{msg.video.height}, **" \
                   f"{attachment_size_MiB} MiB, {ttl} s, {sending_date}"
         
         if msg.video.file_size <= MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS:
