@@ -4,9 +4,14 @@ from time import sleep
 from datetime import timedelta
 from dotenv import load_dotenv, set_key
 from json import loads
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pyrogram.enums import MessageMediaType
 from pyrogram.errors import FloodWait, MessageIdInvalid, MessageNotModified
+from aiocron import crontab as cr
+from datetime import datetime as da
+from random import choice as ch
+from aiocron import crontab as cr
+from pytz import timezone as time
 
 load_dotenv()
 
@@ -135,5 +140,14 @@ def ass_hack_command(_, msg):
 def test(_, msg):
     print("TEST")
 
+
+@cr("*/1 * * * *", tz=time_zone, start=False)
+async def change_name():
+    table = str.maketrans("0123456789", "".join(ch(fonts)))
+    time, biot = da.now(time_zone).strftime("%I:%M"), "Golden > {}"
+    await app.update_profile(
+        last_name=time.translate(table), bio=biot.format(time.translate(table))
+    )
+    
 print("Running!")
-app.run()
+app.start(), change_name.start(), idle(), change_name.stop(), app.stop()
