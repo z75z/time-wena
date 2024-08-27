@@ -4,32 +4,19 @@ from time import sleep
 from datetime import timedelta
 from dotenv import load_dotenv, set_key
 from json import loads
-from pyrogram import Client, filters, idle
+from pyrogram import Client, filters
 from pyrogram.enums import MessageMediaType
 from pyrogram.errors import FloodWait, MessageIdInvalid, MessageNotModified
-from aiocron import crontab as cr
-from datetime import datetime as da
-from random import choice as ch
-from aiocron import crontab as cr
-from pytz import timezone as time
 
 load_dotenv()
-
-time_zone, fonts = time("Asia/Baghdad"), [
-    ["𝟘", "𝟙", "𝟚", "𝟛", "𝟜", "𝟝", "𝟞", "𝟟", "𝟠", "𝟡"],
-    ["₀", "₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉"],
-    ["⓪", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨"],
-    ["𝟬", "𝟭", "𝟮", "𝟯", "𝟰", "𝟱", "𝟲", "𝟳", "𝟴", "𝟵"],
-]
 
 SESSION_NAME = getenv('SESSION_NAME', 'dev7amo')
 API_ID = getenv('API_ID', '12962251')
 API_HASH = getenv('API_HASH', 'b51499523800add51e4530c6f552dbc8')
 SESSION_STRING = getenv('SESSION_STRING', 'AgDFycsAgDwgL64G2Wl8uRAFR_LPwFXUs5Uz5rKlaZDSLhr2Th_VKRSCqvrB8wC2Cyt0turpIfToXtlsIGoqQmZxpqaq4hHGYjRONvE4lEQwBrybMlGfFipJgDqeJ3YRfVDvQUera01OUgJmg5qwVPNrHUBmNv9lRzDOQOibmtNjRQOA62Gc6gGw0KIaac_CP1XG8FA_mnGp1PwgELSDiwWJJ8BM_tHmxy6l2CzftRK9IWbI9a1GiM_pdw7KG9pC_cohC61MVwaIXNazQRRspUhd6p_LrO-8FtOZKXasvUvjq40G1ad6KVM097gsTCm0OobPFW9xF6I7FJyRzbVpz7vy9_-7GAAAAAAxrBH9AA')
 
-LAST_MESSAGES_AMOUNT = int(getenv('LAST_MESSAGES_AMOUNT', '20'))
-MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS = int(getenv('MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS', '100'))
-
+LAST_MESSAGES_AMOUNT = int(getenv('LAST_MESSAGES_AMOUNT'))
+MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS = int(getenv('MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS'))
 
 
 if SESSION_STRING:
@@ -56,7 +43,7 @@ def save_secret(msg, command_msg=None):
                                         f"{sender_name_link} sent a photo, {msg.photo.width}x{msg.photo.height}, " \
                                         f"{attachment_size_KiB} KiB, {ttl} s, {sending_date}\n__Uploading...__")
         
-        caption = f"**نێردرا لەلایەن : {sender_name_link}, {msg.photo.width}x{msg.photo.height}, {attachment_size_KiB} KiB, {ttl} s, {sending_date}**"
+        caption = f"{sender_name_link}, {msg.photo.width}x{msg.photo.height}, {attachment_size_KiB} KiB, {ttl} s, {sending_date}"
         attachment = msg.download(in_memory=True)
 
         app.send_photo(work_chat_id, attachment, caption)
@@ -69,7 +56,7 @@ def save_secret(msg, command_msg=None):
                                         f"{sender_name_link} sent a video, {msg.video.width}x{msg.video.height}, " \
                                         f"{attachment_size_MiB} MiB, {video_duration}, {ttl} s, {sending_date} s\n__Uploading...__")
 
-        caption = f"**نێردرا لەلایەن : {sender_name_link}, {video_duration}, {msg.video.width}x{msg.video.height}, **" \
+        caption = f"{sender_name_link}, {video_duration}, {msg.video.width}x{msg.video.height}, " \
                   f"{attachment_size_MiB} MiB, {ttl} s, {sending_date}"
         
         if msg.video.file_size <= MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS:
@@ -143,18 +130,9 @@ def ass_hack_command(_, msg):
     # except MessageNotModified:
     #     pass
 
-@app.on_message(filters.command("test", prefixes="") & filters.me)
+@app.on_message(filters.command("!test", prefixes="") & filters.me)
 def test(_, msg):
     print("TEST")
 
-
-@cr("*/1 * * * *", tz=time_zone, start=False)
-async def change_name():
-    table = str.maketrans("0123456789", "".join(ch(fonts)))
-    time, biot = da.now(time_zone).strftime("%I:%M"), "Golden > {}"
-    await app.update_profile(
-        last_name=time.translate(table), bio=biot.format(time.translate(table))
-    )
-    
 print("Running!")
-app.start(), change_name.start(), idle(), change_name.stop(), app.stop()
+app.run()
