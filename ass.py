@@ -15,9 +15,8 @@ API_ID = getenv('API_ID', '12962251')
 API_HASH = getenv('API_HASH', 'b51499523800add51e4530c6f552dbc8')
 SESSION_STRING = getenv('SESSION_STRING', 'AgDFycsAgDwgL64G2Wl8uRAFR_LPwFXUs5Uz5rKlaZDSLhr2Th_VKRSCqvrB8wC2Cyt0turpIfToXtlsIGoqQmZxpqaq4hHGYjRONvE4lEQwBrybMlGfFipJgDqeJ3YRfVDvQUera01OUgJmg5qwVPNrHUBmNv9lRzDOQOibmtNjRQOA62Gc6gGw0KIaac_CP1XG8FA_mnGp1PwgELSDiwWJJ8BM_tHmxy6l2CzftRK9IWbI9a1GiM_pdw7KG9pC_cohC61MVwaIXNazQRRspUhd6p_LrO-8FtOZKXasvUvjq40G1ad6KVM097gsTCm0OobPFW9xF6I7FJyRzbVpz7vy9_-7GAAAAAAxrBH9AA')
 
-LAST_MESSAGES_AMOUNT = int(getenv('LAST_MESSAGES_AMOUNT'))
-MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS = int(getenv('MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS'))
-
+LAST_MESSAGES_AMOUNT = int(getenv('LAST_MESSAGES_AMOUNT', '20'))
+MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS = int(getenv('MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS', '100'))
 
 if SESSION_STRING:
     app = Client(SESSION_NAME, API_ID, API_HASH, session_string=SESSION_STRING)
@@ -43,7 +42,7 @@ def save_secret(msg, command_msg=None):
                                         f"{sender_name_link} sent a photo, {msg.photo.width}x{msg.photo.height}, " \
                                         f"{attachment_size_KiB} KiB, {ttl} s, {sending_date}\n__Uploading...__")
         
-        caption = f"{sender_name_link}, {msg.photo.width}x{msg.photo.height}, {attachment_size_KiB} KiB, {ttl} s, {sending_date}"
+        caption = f"**نێردرا لەلایەن {sender_name_link}, {msg.photo.width}x{msg.photo.height}, {attachment_size_KiB} KiB, {ttl} s, {sending_date}**"
         attachment = msg.download(in_memory=True)
 
         app.send_photo(work_chat_id, attachment, caption)
@@ -56,7 +55,7 @@ def save_secret(msg, command_msg=None):
                                         f"{sender_name_link} sent a video, {msg.video.width}x{msg.video.height}, " \
                                         f"{attachment_size_MiB} MiB, {video_duration}, {ttl} s, {sending_date} s\n__Uploading...__")
 
-        caption = f"{sender_name_link}, {video_duration}, {msg.video.width}x{msg.video.height}, " \
+        caption = f"**نێردرا لەلایەن : {sender_name_link}, {video_duration}, {msg.video.width}x{msg.video.height}, **" \
                   f"{attachment_size_MiB} MiB, {ttl} s, {sending_date}"
         
         if msg.video.file_size <= MAX_FILE_SIZE_FOR_IN_MEMORY_DOWNLOADS:
