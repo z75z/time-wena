@@ -1,4 +1,3 @@
 tgcrypto
-pyrogram
 dotenv
 aiocron==1.8
